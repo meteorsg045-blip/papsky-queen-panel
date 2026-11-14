@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>PAPSKY QUEEN PANEL</title>
+<style>body{background:#0f0f0f;color:#fff;font-family:sans-serif;padding:15px}.card{background:#1a1a1a;border:1px solid #ff2d95;border-radius:15px;padding:15px;margin-bottom:15px}h1{color:#ff2d95;text-align:center}input{width:100%;padding:12px;border-radius:10px;border:none;margin:10px 0}button{width:100%;padding:13px;border:none;border-radius:10px;font-weight:bold;margin:5px 0;cursor:pointer}.btn-pink{background:#ff2d95;color:#fff}.btn-green{background:#25D366;color:#fff}.btn-red{background:#ff4444;color:#fff}.btn-grey{background:#333;color:#fff}.code{font-size:32px;letter-spacing:5px;text-align:center;background:#000;padding:15px;border-radius:10px;border:2px dashed #ff2d95}.log{background:#000;height:200px;overflow:auto;padding:10px;font-size:12px;border-radius:10px}.status{text-align:center;font-weight:bold;padding:10px;background:#222;border-radius:10px}</style></head><body>
+<h1>👑 PAPSKY QUEEN PANEL</h1><div class="card"><div class="status" id="status">LOADING...</div></div>
+<div class="card"><b>Nomor Bot:</b><input id="nomor" placeholder="628xxxxxxxxx" value="6285196735043">
+<button class="btn-pink" onclick="start()">▶️ START BOT + MINTA KODE</button>
+<button class="btn-green" onclick="refresh()">🔄 CEK KODE PAIRING</button>
+<div>KODE PAIRING:</div><div class="code" id="code">---- ----</div>
+<p style="font-size:13px;color:#aaa">WA > Perangkat Tertaut > Tautkan dengan nomor telepon > Masukin kode dalam 20 detik</p></div>
+<div class="card"><button class="btn-red" onclick="stop()">⏹️ STOP BOT</button><button class="btn-grey" onclick="logout()">🗑️ LOGOUT + HAPUS SESSION (Kalo 401)</button></div>
+<div class="card"><b>LOG:</b><div class="log" id="logs"></div></div>
+<script>async function refresh(){let r=await fetch('/api/status');let j=await r.json();document.getElementById('status').innerText=j.status;document.getElementById('code').innerText=j.code||'---- ----';document.getElementById('logs').innerText=j.logs.join('\n')}
+async function start(){let nomor=document.getElementById('nomor').value;await fetch('/api/start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nomor})});alert('Tunggu 10 detik, terus CEK KODE');setTimeout(refresh,8000)}
+async function stop(){await fetch('/api/stop',{method:'POST'});refresh()}async function logout(){if(confirm('Yakin?')){await fetch('/api/logout',{method:'POST'});refresh()}}setInterval(refresh,3000);refresh()</script></body></html>
